@@ -1,0 +1,104 @@
+{% extends 'index/layout.html' %}
+{% load static %}
+{% block script %}
+<script src = "{% static 'index/index.js' %}" defer></script>
+<script src="{% static 'lib/cookie.min.js' %}" defer></script>
+{% endblock %}
+{% load static %}
+{% block body %}
+<div style="background-color:lemonchiffon">
+
+
+
+    <!-- ==============TOP NAV================== -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="nav-padding">
+            <span class="nav-ham" id="nav-ham">&#9776;</span>
+            <img src = "{% static 'Icon/icon.png' %}" class="navbar-icon form-icon" title = "Forms">
+            <a href = "{% url 'index' %}" class="navbar-brand">ZETA Forms</a>
+
+        </div>
+    </nav>
+    <!-- =================TOP NAV ENDS======================= -->
+
+    <!-- ======================SIDE BAR=========================== -->
+    <div class="sidebar" id = "sidebar">
+        <span class="close-sidebar" id="close-sidebar">&times;</span>
+        <div class="sidebar-content">
+            <h4 class="sidebar-title">
+                <a href = "{% url 'index' %}" style="text-decoration: none;" class="sidebar-title-link">
+                    <span>ZETA Forms</span>
+                </a>
+
+            </h4>
+            <p class="sidebar-title-link mt-5"><a class="btn btn-primary w-100" href="{% url 'logout' %}">Logout</a></p>
+        </div>
+    </div>
+
+    <!-- =======================SIDE BAR ENDS================================ -->
+
+    <!-- =====================CREATE FORMS=================================== -->
+        <div class="container text-center ">
+          <h3 class="mt-5 p-2">START A NEW FORM</h3>
+          <div class="row">
+          <div class="card form-template-box" id="create-blank-form">
+                <img src = "{% static 'Icon/blank-form.png' %}" alt = "Blank form" title = "Blank form" id="create-blank-form">
+                <span class="form-template-label">Blank Form</span>
+            </div>
+            <div class="card form-template-box big-screen" id="create-contact-form">
+                <img src = "{% static 'Template/contact_information.png' %}" alt = "Contact Information" title = "Contact Information" id="create-contact-form">
+                <span class="form-template-label">Contact Information</span>
+            </div>
+            <div class="card form-template-box big-screen" id="create-customer-feedback">
+                <img src = "{% static 'Template/customer_feedback.png' %}" alt = "Customer Feedback" title = "Customer Feedback" id="create-customer-feedback">
+                <span class="form-template-label">Customer Feedback</span>
+            </div>
+            <div class="card form-template-box big-screen" id="create-event-registration">
+                <img src = "{% static 'Template/customer_feedback.png' %}" alt = "Event Registration" title = "Event Registration" id="create-event-registration">
+                <span class="form-template-label">Event Registration</span>
+            </div>
+          </div>
+        </div>
+
+    <!-- ==================END CREATE FORMS================================== -->
+
+
+
+    <div class="myforms">
+            <h3 class="text-center">YOUR FORMS</h3>
+    </div>
+
+    <div class="container text-center">
+
+        <div class="row">
+        {% for i in forms %}
+
+
+        <div class="col-sm-3 col-xs-3 col-lg-3 column">
+            <a href="{% url 'edit_form' i.code %}" class="btn w-100">
+              <div class="mf-card form-template-box">
+                <img src = "{% static 'Template/customer_feedback.png' %}">
+                <div class="text-center"><p>{{i.title}}</p></div>
+                {% if i.createdAt == i.updatedAt %}
+                <p class="text-muted" style="font-size: 12px;">{{i.createdAt}}</p>
+                {% else %}
+                <p class="text-muted" style="font-size: 12px;">{{i.updatedAt}}</p>
+                {% endif %}
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+
+
+    </div>
+
+    <footer class="container-fluid text-center mt-5">
+        <hr>
+        <p>&copy;  ZETA Forms - NABEEL AHMAD</p>
+        <p>Logged in as ({{user}}) | IP address ({{userip}}) | Time ({{time}})</p>
+    </footer>
+
+
+</div>
+{% endblock %}
